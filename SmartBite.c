@@ -3,7 +3,7 @@
 #include <ctype.h>
 
 #define MAX_PRODUCTS 100
-#define FILE_NAME "products.dat"
+#define FILE_NAME "products.txt"
 
 typedef struct {
     int id;
@@ -64,23 +64,76 @@ int findProduct(int id)
 
 void saveProducts(void)
 {
-    FILE *file = fopen(FILE_NAME, "wb");
+    FILE *file = fopen(FILE_NAME, "w");
+    int i;
+
     if (file == NULL) {
         printf("Error saving products.\n");
         return;
     }
-    fwrite(products, sizeof(Product), productCount, file);
+
+    for (i = 0; i < productCount; i++) {
+        fprintf(file, "%d\n", products[i].id);
+        fprintf(file, "%s\n", products[i].name);
+        fprintf(file, "%s\n", products[i].category);
+        fprintf(file, "%s\n", products[i].type);
+        fprintf(file, "%.2f\n", products[i].price);
+    }
+
     fclose(file);
 }
 
 void loadProducts(void)
 {
-    FILE *file = fopen(FILE_NAME, "rb");
-    if (file == NULL) return;
+    FILE *file = fopen(FILE_NAME, "r");
+    int i;
 
-    productCount = (int)fread(
-        products, sizeof(Product), MAX_PRODUCTS, file
-    );
+    if (file == NULL)
+        return;
+
+    productCount = 0;
+
+    while (productCount < MAX_PRODUCTS) {
+        Product p;
+        char line[100];
+
+        if (fgets(line, sizeof(line), file) == NULL)
+            break;
+        if (sscanf(line, "%d", &p.id) != 1)
+            break;
+
+        if (fgets(p.name, sizeof(p.name), file) == NULL)
+            break;
+        p.name[strcspn(p.name, "\n")] = '\0';
+
+        if (fgets(p.category, sizeof(p.category), file) == NULL)
+            break;
+        p.category[strcspn(p.category, "\n")] = '\0';
+
+        if (fgets(p.type, sizeof(p.type), file) == NULL)
+            break;
+        p.type[strcspn(p.type, "\n")] = '\0';
+
+        if (fgets(line, sizeof(line), file) == NULL)
+            break;
+        if (sscanf(line, "%f", &p.price) != 1)
+            break;
+
+        if (p.id < 0 || p.name[0] == '\0' || p.price < 0)
+            continue;
+
+        for (i = 0; i < productCount; i++) {
+            if (products[i].id == p.id)
+                break;
+        }
+
+        if (i < productCount)
+            continue;
+
+        products[productCount] = p;
+        productCount++;
+    }
+
     fclose(file);
 }
 
@@ -169,13 +222,23 @@ void addProduct(void)
         return;
     }
 
-    printf("\n========== ADD PRODUCT ==========\n");
+    printf("\nADD PRODUCT\n");
 
-    if (!inputInt("Enter Product ID: ", &id)) return;
+    while (1) {
+        if (!inputInt("Enter Product ID: ", &id))
+            continue;
 
-    if (findProduct(id) != -1) {
-        printf("Product ID already exists.\n");
-        return;
+        if (id < 0) {
+            printf("Product ID cannot be negative.\n");
+            continue;
+        }
+
+        if (findProduct(id) != -1) {
+            printf("Product ID already exists. Enter another ID.\n");
+            continue;
+        }
+
+        break;
     }
 
     p = &products[productCount];
@@ -202,7 +265,7 @@ void addProduct(void)
 
     productCount++;
     saveProducts();
-    printf("Product added successfully.\n");
+    printf("Product added successfully.\n\n");
 }
 
 void updateProduct(void)
@@ -211,7 +274,7 @@ void updateProduct(void)
     float price;
     char name[50];
 
-    printf("\n========== UPDATE PRODUCT ==========\n");
+    printf("\nUPDATE PRODUCT\n");
 
     if (!inputInt("Enter Product ID: ", &id)) return;
 
@@ -268,7 +331,7 @@ void viewProducts(void)
     const char *category, *type;
 
     do {
-        printf("\n========== VIEW PRODUCTS ==========\n");
+        printf("\nVIEW PRODUCTS\n");
         printf("1. DRINKS\n2. SNACKS\n3. FOODS\n0. BACK\n");
 
         if (!inputInt("Enter choice: ", &choice)) continue;
@@ -318,7 +381,7 @@ void removeProduct(void)
 {
     int id, index, i;
 
-    printf("\n========== REMOVE PRODUCT ==========\n");
+    printf("\nREMOVE PRODUCT\n");
 
     if (!inputInt("Enter Product ID: ", &id)) return;
 
@@ -368,7 +431,7 @@ void sortProducts(void)
 
     saveProducts();
 
-    printf("\n========== LISTINGS ==========\n");
+    printf("\nLISTINGS\n");
     printf("Lowest to highest price.\n");
     printf("\n%-5s %-20s %-12s %-12s %-10s\n",
            "ID", "NAME", "CATEGORY", "TYPE", "PRICE");
@@ -380,6 +443,7 @@ void sortProducts(void)
                products[i].category, products[i].type,
                products[i].price);
     }
+    printf("\n");
 }
 
 int validCard(const char *card)
@@ -401,7 +465,7 @@ void transaction(void)
     float total, amount;
     char card[50];
 
-    printf("\n========== TRANSACTION ==========\n");
+    printf("\nTRANSACTION\n");
 
     if (!inputInt("Enter Product ID: ", &id)) return;
 
@@ -478,13 +542,12 @@ void transaction(void)
     }
 
     if (paymentSuccessful) {
-        printf("\n========== TRANSACTION RECEIPT ==========\n");
+        printf("TRANSACTION RECEIPT");
         printf("Product : %s\n", products[index].name);
         printf("Price   : %.2f\n", products[index].price);
         printf("Quantity: %d\n", quantity);
         printf("Total   : %.2f\n", total);
         printf("Status  : PAID\n");
-        printf("==========================================\n");
     }
 }
 
@@ -495,19 +558,12 @@ int main(void)
     loadProducts();
 
     do {
-        printf("\n================================\n");
-        printf("           SMARBITE\n");
-        printf("================================\n");
-        printf("1. Add Product\n");
-        printf("2. Update Product\n");
-        printf("3. View Products\n");
-        printf("4. Remove Product\n");
-        printf("5. Listings (Sort by Price)\n");
-        printf("6. Transaction\n");
-        printf("0. Exit\n");
-        printf("================================\n");
+        printf("SMARBITE\n");
+        printf("1. Add Product\n2. Update Product\n3. View Product\n4. Remove Product\n5. Sorted List (L-H)\n6. Transaction\n0. Exit\n");
+
 
         if (!inputInt("Enter choice: ", &choice)) continue;
+        printf("\n");
 
         switch (choice) {
             case 1: addProduct(); break;
