@@ -222,7 +222,7 @@ void addProduct(void)
         return;
     }
 
-    printf("\nADD PRODUCT\n");
+    printf("ADD PRODUCT\n");
 
     while (1) {
         if (!inputInt("Enter Product ID: ", &id))
@@ -274,7 +274,7 @@ void updateProduct(void)
     float price;
     char name[50];
 
-    printf("\nUPDATE PRODUCT\n");
+    printf("UPDATE PRODUCT\n");
 
     if (!inputInt("Enter Product ID: ", &id)) return;
 
@@ -331,7 +331,7 @@ void viewProducts(void)
     const char *category, *type;
 
     do {
-        printf("\nVIEW PRODUCTS\n");
+        printf("VIEW PRODUCTS\n");
         printf("1. DRINKS\n2. SNACKS\n3. FOODS\n0. BACK\n");
 
         if (!inputInt("Enter choice: ", &choice)) continue;
@@ -381,7 +381,7 @@ void removeProduct(void)
 {
     int id, index, i;
 
-    printf("\nREMOVE PRODUCT\n");
+    printf("REMOVE PRODUCT\n");
 
     if (!inputInt("Enter Product ID: ", &id)) return;
 
