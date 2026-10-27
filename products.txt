@@ -1,8 +1,150 @@
-1001 Iced Coffee DRINKS ICED 89.00 1002 Iced Tea DRINKS ICED 45.00 1003
-Iced Chocolate DRINKS ICED 75.00 1004 Hot Coffee DRINKS HOT 50.00 1005
-Hot Chocolate DRINKS HOT 65.00 2001 French Fries SNACKS - 50.00 2002
-Cheese Sticks SNACKS - 45.00 2003 Chicken Nuggets SNACKS - 80.00 2004
-Nachos SNACKS - 75.00 2005 Onion Rings SNACKS - 55.00 3001 Tapsilog
-FOODS BREAKFAST 110.00 3002 Longsilog FOODS BREAKFAST 100.00 3003
-Chicken Adobo with Rice FOODS LUNCH 120.00 3004 Pork Chop with Rice
-FOODS DINNER 125.00 3005 Grilled Fish with Rice FOODS DINNER 130.00
+1001
+Iced Coffee
+DRINKS
+ICED
+89.00
+1002
+Iced Tea
+DRINKS
+ICED
+45.00
+1003
+Iced Chocolate
+DRINKS
+ICED
+75.00
+1004
+Iced Matcha
+DRINKS
+ICED
+80.00
+1005
+Iced Mocha
+DRINKS
+ICED
+95.00
+1006
+Hot Coffee
+DRINKS
+HOT
+50.00
+1007
+Hot Chocolate
+DRINKS
+HOT
+65.00
+1008
+Hot Tea
+DRINKS
+HOT
+40.00
+1009
+Hot Matcha
+DRINKS
+HOT
+75.00
+1010
+Hot Mocha
+DRINKS
+HOT
+85.00
+2001
+French Fries
+SNACKS
+-
+50.00
+2002
+Cheese Sticks
+SNACKS
+-
+45.00
+2003
+Chicken Nuggets
+SNACKS
+-
+80.00
+2004
+Nachos
+SNACKS
+-
+75.00
+2005
+Onion Rings
+SNACKS
+-
+55.00
+3001
+Tapsilog
+FOODS
+BREAKFAST
+110.00
+3002
+Longsilog
+FOODS
+BREAKFAST
+100.00
+3003
+Hotsilog
+FOODS
+BREAKFAST
+85.00
+3004
+Hamsilog
+FOODS
+BREAKFAST
+90.00
+3005
+Bangsilog
+FOODS
+BREAKFAST
+120.00
+3101
+Chicken Adobo with Rice
+FOODS
+LUNCH
+120.00
+3102
+Pork Sinigang with Rice
+FOODS
+LUNCH
+140.00
+3103
+Chicken Inasal with Rice
+FOODS
+LUNCH
+130.00
+3104
+Pork Sisig with Rice
+FOODS
+LUNCH
+125.00
+3105
+Beef Steak with Rice
+FOODS
+LUNCH
+150.00
+3201
+Fried Chicken with Rice
+FOODS
+DINNER
+115.00
+3202
+Pork Chop with Rice
+FOODS
+DINNER
+125.00
+3203
+Pork Barbecue with Rice
+FOODS
+DINNER
+120.00
+3204
+Beef Caldereta with Rice
+FOODS
+DINNER
+150.00
+3205
+Grilled Fish with Rice
+FOODS
+DINNER
+130.00
